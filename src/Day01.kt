@@ -1,20 +1,47 @@
+import java.util.*
+import kotlin.math.abs
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    fun part1(input: List<String>): Long {
+        val left = PriorityQueue<Long>(input.size)
+        val right = PriorityQueue<Long>(input.size)
+
+        for (line in input) {
+            val (a, b) = line.split("   ").map(String::toLong)
+            left.add(a)
+            right.add(b)
+        }
+
+        var totalDistance = 0L
+        while (left.isNotEmpty()) {
+            totalDistance += abs(left.poll() - right.poll())
+        }
+
+        return totalDistance
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+    fun part2(input: List<String>): Long {
+        val left = PriorityQueue<Long>(input.size)
+        val right = mutableMapOf<Long, Long>()
+
+        for (line in input) {
+            val (a, b) = line.split("   ").map(String::toLong)
+            left.add(a)
+            right[b] = (right[b] ?: 0L) + 1L
+        }
+
+        var totalSimilarity = 0L
+        while (left.isNotEmpty()) {
+            val v = left.poll()
+            totalSimilarity += v * (right[v] ?: 0L)
+        }
+
+        return totalSimilarity
     }
 
-    // Test if implementation meets criteria from the description, like:
-    check(part1(listOf("test_input")) == 1)
+    check(part1(listOf("3   4", "4   3", "2   5", "1   3", "3   9", "3   3")) == 11L)
+    check(part2(listOf("3   4", "4   3", "2   5", "1   3", "3   9", "3   3")) == 31L)
 
-    // Or read a large test input from the `src/Day01_test.txt` file:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    // Read the input from the `src/Day01.txt` file.
     val input = readInput("Day01")
     part1(input).println()
     part2(input).println()
