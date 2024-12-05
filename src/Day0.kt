@@ -7,8 +7,9 @@ fun main() {
         return input.size
     }
 
-    check(part1(listOf("test_input")) == 1)
-    check(part2(listOf("test_input")) == 1)
+    val testInput = """w""".lines()
+    check(part1(testInput) == 1)
+    check(part2(testInput) == 1)
 
     val input = readInput("Day0")
     part1(input).println()
