@@ -1,21 +1,10 @@
-private data class Point(val r: Int, val c: Int) {
-    fun apply(direction: Direction) = Point(r + direction.dr, c + direction.dc)
-}
-
-private enum class Direction(val dr: Int, val dc: Int) {
-    LEFT(0, -1),
-    TOP(-1, 0),
-    RIGHT(0, 1),
-    BOTTOM(1, 0);
-
-    val turnRight
-        get() = when (this) {
-            LEFT -> TOP
-            TOP -> RIGHT
-            RIGHT -> BOTTOM
-            BOTTOM -> LEFT
-        }
-}
+private val Direction.turnRight
+    get() = when (this) {
+        Direction.LEFT -> Direction.TOP
+        Direction.TOP -> Direction.RIGHT
+        Direction.RIGHT -> Direction.BOTTOM
+        Direction.BOTTOM -> Direction.LEFT
+    }
 
 private val Char.direction
     get() = when (this) {
